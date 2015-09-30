@@ -7,6 +7,7 @@ class IndexController extends Controller {
     }
     
     public function test(){
-        echo 'test';
+        $res = M('article')->select();
+        var_dump($res);
     }
 }
