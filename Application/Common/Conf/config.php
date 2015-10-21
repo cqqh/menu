@@ -1,10 +1,12 @@
 <?php
 return array(
-	//'配置项'=>'配置值'
+    //'配置项'=>'配置值'
     // 关闭多模块访问
     'MULTI_MODULE'          =>  false,
     'DEFAULT_MODULE'        =>  'Home',
-    
+
+    'TMPL_ENGINE_TYPE'=>'smarty',
+
     // 加载扩展配置文件
     'LOAD_EXT_CONFIG' => 'db',
 );
