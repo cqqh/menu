@@ -93,10 +93,10 @@
         {foreach $type as $data}
             <div class="{$data['alias']}">
                 {foreach $list[$data['id']] as $dish}
-                <div class="f-cb item-info" data-id="{$dish['id']}" data-price="{$dish['price']}">
+                <div class="f-cb item-info dish_{$dish['id']}" data-id="{$dish['id']}" data-price="{$dish['price']}">
                     <div class="f-fl img"><img src="{$dish['img']}" width="100" height="100" /></div>
                     <div class="f-fl">{$dish['name']}</div>
-                    <div class="f-fr f-cb item-console"><a class="remove-food">-</a> <span class="item-count">0</span> <a class="add-food">+</a></div>
+                    <div class="f-fr f-cb item-console"><a class="remove-food" onclick="dishAdd({$dish['id']}, -1)">-</a> <span class="item-count">0</span> <a class="add-food" onclick="dishAdd({$dish['id']}, 1)">+</a></div>
                     <div class="f-fr">{$dish['price']}</div>
                 </div>
                 {/foreach}
@@ -106,13 +106,15 @@
     <div style="height: 50px;"></div>
 </div>
 <div id="cart">
-    <form>
+    <form action="/index/preview" method="post">
 
     </form>
+    <div class="cart">
 
+    </div>
     <div class="cart-btns">
         <button class="pure-button pure-button-primary">
-            <i class="fa fa-shopping-cart"></i> 下单
+            <i class="fa fa-shopping-cart"></i> <b class="quantity">0</b>份 <b class="price">0</b>元
         </button>
     </div>
 
@@ -125,7 +127,8 @@
 //            $(".pure-menu-item").removeClass("pure-menu-active");
 //            $(this).addClass("pure-menu-active");
 //        });
-        location.hash = '';
+
+        //location.hash = '';
 
         $(".cart-btns").click(function(){
             $.ajax({
@@ -137,7 +140,16 @@
                     alert();
                 }
             });
+
+            window.localStorage.setItem('dish', $("form").serialize());
+            $("form").submit();
         });
+
+        var dish = window.localStorage.dish.split('&');
+        for(var i = 0;i < dish.length; i++){
+            console.log([dish[i].split('=')[0], dish[i].split('=')[1]]);
+            dishAdd(dish[i].split('=')[0], dish[i].split('=')[1])
+        }
     });
 
     window.addEventListener("hashchange", function(){
@@ -151,38 +163,29 @@
         $(".pure-menu-item."+hash).addClass("pure-menu-active");
     });
 
-    $(".item-console a.remove-food").click(function(){
-        var node = $(this).parent().parent();
+    var quantity = $(".cart-btns .quantity");
+    var price = $(".cart-btns .price");
+
+    function dishAdd(id, num){
+        var node = $(".dish_" + id);
         var count = Number(node.find(".item-count").text());
-        var id = "dish_"+node.data("id");
-        //var name = node.data("id");
-        console.log(node.data("id"));
-        if(count <= 0){
-            node.find(".item-count").html(0);
-        }else{
-            node.find(".item-count").html(count - 1);
-
-            if(document.getElementById(id)){
-                $("#cart > form > #"+id).val(count - 1);
-            }
-        }
-
-    });
-
-    $(".item-console a.add-food").click(function(){
-        var node = $(this).parent().parent();
-        var count = Number(node.find(".item-count").text());
-        var id = "dish_"+node.data("id");
+        var form_id = "dish_"+node.data("id");
         var name = node.data("id");
-        console.log(node.data("id"));
-        node.find(".item-count").html(count + 1);
-
-        if(document.getElementById(id)){
-            $("#cart > form > #"+id).val(count + 1);
-        }else{
-            $("#cart > form").append($("<input type='hidden' value=1 name='"+name+"' id='"+id+"'>"));
+        num = Number(num);
+        if(count <= 0 && num <= 0){
+            return;
         }
-    });
+
+        if(document.getElementById(form_id)){
+            $("#cart > form > #"+form_id).val(count + num);
+        }else{
+            $("#cart > form").append($("<input type='hidden' value='"+num+"' name='"+name+"' id='"+form_id+"'>"));
+        }
+
+        node.find(".item-count").html(count + num);
+        $(".cart-btns .quantity").text(Number(quantity.text()) + num); //总数量
+        $(".cart-btns .price").text((Number(price.text()) + Number(node.data("price")) * num).toFixed(2)); //价格
+    }
 </script>
 </body>
 </html>
