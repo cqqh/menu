@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{$title}</title>
+    <link rel="stylesheet" href="/rs/css/pure.css">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">-->
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="main">
+        <table class="pure-table pure-table-horizontal" style="width: 100%">
+            <thead>
+            <tr>
+                <th>名称</th>
+                <th>价格</th>
+                <th>份数</th>
+                <th>合计</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $data}
+            <tr>
+                <td>{$data['name']}</td>
+                <td>{$data['price']}</td>
+                <td>{$data['quantity']}</td>
+                <td>{$data['total']}</td>
+            </tr>
+            {/foreach}
+
+            </tbody>
+        </table>
+    </div>
+    <div style="height: 50px;"></div>
+
+<div id="cart">
+    <form action="/index/submit" method="post">
+
+    </form>
+    <div class="cart">
+
+    </div>
+    <div class="cart-btns">
+        <button class="pure-button pure-button-primary">
+            确认订单 <b class="quantity">{$quantity}</b>份 <b class="price">{$total}</b>元
+        </button>
+    </div>
+    <div class="back-btns">
+        <button class="button-secondary pure-button" onclick="javascript:window.history.back(-1); return false;">
+            返回修改
+        </button>
+    </div>
+
+</div>
+
+<script src="/rs/js/jquery.js"></script>
+<script>
+    $(function(){
+        $(".cart-btns .pure-button").click(function(){
+            var me = $(this);
+            me.attr('disabled', true);
+            $.ajax({
+                type: 'POST',
+                url: "/index/submit",
+                data: window.localStorage.getItem('dish'),
+                dataType: "json",
+                success: function(json){
+                    me.attr('disabled', false);
+                }
+            });
+        });
+    });
+
+</script>
+</body>
+</html>

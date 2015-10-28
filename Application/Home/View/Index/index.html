@@ -84,7 +84,7 @@
 
             <ul class="pure-menu-list">
                 {foreach $type as $data}
-                    <li class="pure-menu-item {$data['alias']}"><a href="#{$data['alias']}" class="pure-menu-link">{$data['name']}</a></li>
+                    <li class="pure-menu-item {$data['alias']}" data-alias="{$data['alias']}"><a href="#{$data['alias']}" class="pure-menu-link">{$data['name']}</a></li>
                 {/foreach}
             </ul>
         </div>
@@ -123,12 +123,21 @@
 <script src="/rs/js/jquery.js"></script>
 <script>
     $(function(){
-//        $(".pure-menu-item").click(function(){
-//            $(".pure-menu-item").removeClass("pure-menu-active");
-//            $(this).addClass("pure-menu-active");
-//        });
+        $(".pure-menu-item").click(function(){
+            var me = $(this);
+            $("#main > div").css('display', 'none');
+            $("#main > ."+me.data('alias')).css('display', 'block');
+            $(".pure-menu-item").removeClass("pure-menu-active");
+            me.addClass("pure-menu-active");
+        });
 
-        //location.hash = '';
+        if(window.location.hash){
+            //$("#main > ."+window.location.hash.substr(1)).css('display', 'block');
+
+            $(".pure-menu-item."+window.location.hash.substr(1)).click();
+        }else{
+            $(".pure-menu-item").first().click();
+        }
 
         $(".cart-btns").click(function(){
             $.ajax({
@@ -137,7 +146,7 @@
                 data: $("form").serialize(),
                 dataType: "json",
                 success: function(json){
-                    alert();
+                    //alert();
                 }
             });
 
@@ -152,16 +161,16 @@
         }
     });
 
-    window.addEventListener("hashchange", function(){
-        var hash = location.hash.substr(1);
-        if(hash == '') return;
-
-        $("#main > div").css('display', 'none');
-        $("#main > ."+hash).css('display', 'block');
-
-        $(".pure-menu-item").removeClass("pure-menu-active");
-        $(".pure-menu-item."+hash).addClass("pure-menu-active");
-    });
+//    window.addEventListener("hashchange", function(){
+//        var hash = location.hash.substr(1);
+//        if(hash == '') return;
+//
+//        $("#main > div").css('display', 'none');
+//        $("#main > ."+hash).css('display', 'block');
+//
+//        $(".pure-menu-item").removeClass("pure-menu-active");
+//        $(".pure-menu-item."+hash).addClass("pure-menu-active");
+//    });
 
     var quantity = $(".cart-btns .quantity");
     var price = $(".cart-btns .price");
