@@ -30,9 +30,40 @@
                 <td>{$data['total']}</td>
             </tr>
             {/foreach}
-
             </tbody>
         </table>
+        <form class="pure-form pure-g">
+            <fieldset class="pure-group"  style="margin: 20px auto;">
+                <select id="table_num" class="pure-input-1-2">
+                    <option>桌号</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+                <select id="customer_num" class="pure-input-1-2">
+                    <option>人数</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+                <textarea class="pure-input-1" name="desc" id="desc" placeholder="备注"></textarea>
+
+            </fieldset>
+        </form>
     </div>
     <div style="height: 50px;"></div>
 
@@ -61,14 +92,18 @@
     $(function(){
         $(".cart-btns .pure-button").click(function(){
             var me = $(this);
+            var customer_num = $("#customer_num").val(), table_num = $("#table_num").val(),desc = $("#desc").val();
             me.attr('disabled', true);
             $.ajax({
                 type: 'POST',
                 url: "/index/submit",
-                data: window.localStorage.getItem('dish'),
+                data: "desc="+desc+"&table_num="+table_num+"&customer_num="+customer_num+"&"+window.localStorage.getItem('dish'),
                 dataType: "json",
                 success: function(json){
                     me.attr('disabled', false);
+                    window.localStorage.clear();
+                    alert('点餐成功');
+                    window.location.href = '/';
                 }
             });
         });

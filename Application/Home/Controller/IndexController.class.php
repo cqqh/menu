@@ -43,6 +43,12 @@ class IndexController extends Controller {
         $map['id'] = ['in', array_keys($_POST)];
         $quantity = 0;
         $total = 0;
+
+        $order['table_num'] = $_POST['table_num'];
+        $order['customer_num'] = $_POST['customer_num'];
+        $order['desc'] = $_POST['desc'];
+        $order_id = M('order')->add($order);
+
         foreach(M('dish')->where($map)->select() as $data){
             if(!$_POST[$data['id']]) continue;
             $data['quantity'] = $_POST[$data['id']];
@@ -50,6 +56,7 @@ class IndexController extends Controller {
             $list[$data['id']] = $data;
             $quantity +=$data['quantity'];
             $total +=$data['total'];
+            M('order_dish')->add(['order_id' => $order_id, 'dish_id' => $data['id'], 'num' => $data['quantity']]);
         }
 
         echo json_encode($list);

@@ -80,18 +80,21 @@
 <div id="layout">
     <div id="menu">
         <div class="pure-menu">
-            <a class="pure-menu-heading" href="#">Company</a>
+            <a class="pure-menu-heading" href="/console">Company</a>
 
             <ul class="pure-menu-list">
                 {foreach $type as $data}
-                    <li class="pure-menu-item {$data['alias']}" data-alias="{$data['alias']}"><a href="#{$data['alias']}" class="pure-menu-link">{$data['name']}</a></li>
+                    <li class="pure-menu-item {$data['alias']}" data-alias="{$data['alias']}">
+                        <a href="#{$data['alias']}" class="pure-menu-link">{$data['name']}</a>
+                        <span class="label" style="display: none;">0</span>
+                    </li>
                 {/foreach}
             </ul>
         </div>
     </div>
     <div id="main">
         {foreach $type as $data}
-            <div class="{$data['alias']}">
+            <div class="{$data['alias']}" data-alias="{$data['alias']}">
                 {foreach $list[$data['id']] as $dish}
                 <div class="f-cb item-info dish_{$dish['id']}" data-id="{$dish['id']}" data-price="{$dish['price']}">
                     <div class="f-fl img"><img src="{$dish['img']}" width="100" height="100" /></div>
@@ -132,7 +135,6 @@
         });
 
         if(window.location.hash){
-            //$("#main > ."+window.location.hash.substr(1)).css('display', 'block');
 
             $(".pure-menu-item."+window.location.hash.substr(1)).click();
         }else{
@@ -140,25 +142,34 @@
         }
 
         $(".cart-btns").click(function(){
-            $.ajax({
-                type: 'POST',
-                url: "/index/submit",
-                data: $("form").serialize(),
-                dataType: "json",
-                success: function(json){
-                    //alert();
-                }
-            });
+            if($("form").serialize() == ''){
+                alert('还没点餐哟');
+                return false;
+            }
+
+//            $.ajax({
+//                type: 'POST',
+//                url: "/index/submit",
+//                data: $("form").serialize(),
+//                dataType: "json",
+//                success: function(json){
+//                    //alert();
+//                }
+//            });
 
             window.localStorage.setItem('dish', $("form").serialize());
             $("form").submit();
         });
 
-        var dish = window.localStorage.dish.split('&');
-        for(var i = 0;i < dish.length; i++){
-            console.log([dish[i].split('=')[0], dish[i].split('=')[1]]);
-            dishAdd(dish[i].split('=')[0], dish[i].split('=')[1])
+        //初始化购物车
+        if(window.localStorage.dish){
+            var dish = window.localStorage.dish.split('&');
+            for(var i = 0;i < dish.length; i++){
+                console.log([dish[i].split('=')[0], dish[i].split('=')[1]]);
+                dishAdd(dish[i].split('=')[0], dish[i].split('=')[1])
+            }
         }
+
     });
 
 //    window.addEventListener("hashchange", function(){
@@ -194,6 +205,16 @@
         node.find(".item-count").html(count + num);
         $(".cart-btns .quantity").text(Number(quantity.text()) + num); //总数量
         $(".cart-btns .price").text((Number(price.text()) + Number(node.data("price")) * num).toFixed(2)); //价格
+
+        //更新label数字
+        var label = $(".pure-menu-item."+node.parent().data('alias')+" span.label");
+        var label_num = Number(label.text()) + num;
+        label.text(label_num);
+        if(label_num <= 0){
+            label.hide();
+        }else{
+            label.show();
+        }
     }
 </script>
 </body>
