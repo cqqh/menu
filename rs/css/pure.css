@@ -884,3 +884,33 @@ td,th {
     border-radius: 12px;
     font-size: 12px;
 }
+
+/* console */
+#list .list-item {
+    padding: 0.9em 1em;
+    border-bottom: 1px solid #ddd;
+    position: relative; overflow: hidden;
+}
+
+.list-item div.list-edit{
+    position: absolute;
+    /*display: none;*/
+    left: 0px;
+    bottom: -30px;
+    height: 30px;
+    width: 100%;
+    background: rgba(176, 187, 187, 0.80);
+    transition: all .2s linear;
+    z-index: 10;
+}
+.list-item div.list-edit > div{
+    padding: 7px 20px;
+    color: #fff;
+    font-weight: bold;
+}
+.list-item div.list-edit > .success{
+    background-color: #1cbc6d;
+}
+.list-item div.list-edit > .cancel{
+    background-color: #EC7777;
+}
