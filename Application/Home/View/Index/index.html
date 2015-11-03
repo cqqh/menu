@@ -14,7 +14,7 @@
 <div id="layout">
     <div id="menu">
         <div class="pure-menu">
-            <a class="pure-menu-heading" href="/console">Company</a>
+            <a class="pure-menu-heading" href="{$smarty.const.__ROOT__}/console">Company</a>
 
             <ul class="pure-menu-list">
                 {foreach $type as $data}
@@ -43,7 +43,7 @@
     <div style="height: 50px;"></div>
 </div>
 <div id="cart">
-    <form action="/index/preview" method="post">
+    <form action="{$smarty.const.__ROOT__}/index/preview" method="post">
 
     </form>
     <div class="cart">
@@ -57,7 +57,7 @@
 
 </div>
 
-<script src="/rs/js/jquery.js"></script>
+<script src="{$smarty.const.__ROOT__}/rs/js/jquery.js"></script>
 <script>
     $(function(){
         $(".pure-menu-item").click(function(){

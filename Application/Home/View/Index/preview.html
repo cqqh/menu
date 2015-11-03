@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{$title}</title>
-    <link rel="stylesheet" href="/rs/css/pure.css">
+    <link rel="stylesheet" href="{$smarty.const.__ROOT__}/rs/css/pure.css">
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">-->
     <style>
 
@@ -68,7 +68,7 @@
     <div style="height: 50px;"></div>
 
 <div id="cart">
-    <form action="/index/submit" method="post">
+    <form action="{$smarty.const.__ROOT__}/index/submit" method="post">
 
     </form>
     <div class="cart">
@@ -87,7 +87,7 @@
 
 </div>
 
-<script src="/rs/js/jquery.js"></script>
+<script src="{$smarty.const.__ROOT__}/rs/js/jquery.js"></script>
 <script>
     $(function(){
         $(".cart-btns .pure-button").click(function(){
@@ -96,7 +96,7 @@
             me.attr('disabled', true);
             $.ajax({
                 type: 'POST',
-                url: "/index/submit",
+                url: "{$smarty.const.__ROOT__}/index/submit",
                 data: "desc="+desc+"&table_num="+table_num+"&customer_num="+customer_num+"&"+window.localStorage.getItem('dish'),
                 dataType: "json",
                 success: function(json){
