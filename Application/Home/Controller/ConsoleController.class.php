@@ -16,7 +16,7 @@ class ConsoleController extends Controller
             $dish[$data['id']] = $data;
         }
 
-        $list = M('order_dish')->field('dr_order_dish.*,dr_order.table_num')->where(['status' => 0])->join('dr_order ON dr_order.id = dr_order_dish.order_id')->select();
+        $list = M('order_dish')->field('dr_order_dish.*,dr_order.table_num')->where('dr_order.status = 0')->join('dr_order ON dr_order.id = dr_order_dish.order_id')->select();
 
         $this->list = $list;
         $this->dish = $dish;
