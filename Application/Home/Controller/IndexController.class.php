@@ -16,6 +16,7 @@ class IndexController extends Controller {
     public function test(){
         $res = M('dish')->select();
         var_dump($res);
+        var_dump($_SERVER);
     }
 
     public function preview(){
