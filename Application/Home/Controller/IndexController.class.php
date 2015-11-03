@@ -60,6 +60,9 @@ class IndexController extends Controller {
             M('order_dish')->add(['order_id' => $order_id, 'dish_id' => $data['id'], 'num' => $data['quantity']]);
         }
 
+        //打印小票
+        system("sudo python /home/pi/print/php.py {$order_id}", $res);
+
         echo json_encode($list);
     }
 }
