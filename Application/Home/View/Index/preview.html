@@ -100,10 +100,16 @@
                 data: "desc="+desc+"&table_num="+table_num+"&customer_num="+customer_num+"&"+window.localStorage.getItem('dish'),
                 dataType: "json",
                 success: function(json){
-                    me.attr('disabled', false);
-                    window.localStorage.clear();
-                    alert('点餐成功');
-                    window.location.href = '/';
+
+                    if(json.status == 0){
+                        me.attr('disabled', false);
+                        window.localStorage.clear();
+                        alert('点餐成功');
+                        window.location.href = '/';
+                    }else{
+                        alert(json.data);
+                    }
+
                 }
             });
         });

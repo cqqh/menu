@@ -61,8 +61,8 @@ class IndexController extends Controller {
         }
 
         //打印小票
-        system("sudo python /home/pi/print/php.py {$order_id}", $res);
+        exec("sudo python /home/pi/print/php.py {$order_id}", $out, $res);
 
-        echo json_encode($list);
+        echo json_encode(['status' => $res, 'data' => $out]);
     }
 }
