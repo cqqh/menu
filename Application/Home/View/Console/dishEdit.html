@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{$title}</title>
+    <link rel="stylesheet" href="{$smarty.const.__ROOT__}/rs/css/pure.css">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">-->
+    <style>
+        #edit{
+            width: 450px;
+            margin: auto;
+            margin-top: 5%;
+        }
+    </style>
+</head>
+<body>
+<div id="layout">
+    <div id="menu">
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="{$smarty.const.__ROOT__}/console">Company</a>
+            <a class="pure-menu-heading" href="{$smarty.const.__ROOT__}/console/dish">菜品管理</a>
+            <a class="pure-menu-heading" href="{$smarty.const.__ROOT__}/">菜单</a>
+
+            <ul class="pure-menu-list">
+                <!--<li class="pure-menu-heading">Labels</li>-->
+            </ul>
+        </div>
+    </div>
+    <div id="edit">
+        <form class="pure-form pure-form-aligned" action="{$smarty.const.__ROOT__}/console/dishSave" method="post" enctype="multipart/form-data">
+            <legend>编辑</legend>
+
+            <fieldset>
+                {if $info['id']}
+                    <input type="hidden" name="id" value="{$info['id']}">
+                {/if}
+                <div class="pure-control-group">
+                    <label for="name">名称</label>
+                    <input id="name" name="name" value="{$info['name']}" type="text" placeholder="名称">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="price">价格</label>
+                    <input id="price" name="price" value="{$info['price']}" type="text" placeholder="名称">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="type">类型</label>
+                    <select id="type">
+                        {foreach $type as $key=>$name}
+                            <option value="{$key}" {if $key == $info['type']}selected{/if}>{$name}</option>
+                        {/foreach}
+                    </select>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="img">图片</label>
+                    <input id="img" name="img" value="{$info['img']}" type="file" accept="image/jpeg" style="width: 200px;">
+                </div>
+                <div class="pure-control-group" style="text-align: center;">
+                    <img src="{$info['img']}" height="100">
+                </div>
+
+
+                <div class="pure-controls">
+
+                    <button type="submit" class="pure-button pure-button-primary">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script src="{$smarty.const.__ROOT__}/rs/js/jquery.js"></script>
+<script>
+    $(function(){
+
+    });
+</script>
+</body>
+</html>

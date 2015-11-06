@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{$title}</title>
+    <link rel="stylesheet" href="{$smarty.const.__ROOT__}/rs/css/pure.css">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">-->
+    <style>
+
+    </style>
+</head>
+<body>
+<div id="layout">
+    <div id="menu">
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="{$smarty.const.__ROOT__}/console">Company</a>
+            <a class="pure-menu-heading" href="{$smarty.const.__ROOT__}/console/dish">菜品管理</a>
+            <a class="pure-menu-heading" href="{$smarty.const.__ROOT__}/">菜单</a>
+
+            <ul class="pure-menu-list">
+                <!--<li class="pure-menu-heading">Labels</li>-->
+            </ul>
+        </div>
+    </div>
+    <div id="list" class="pure-u-1">
+        <table class="pure-table pure-table-horizontal" style="width: 100%">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>类型</th>
+                <th>图片</th>
+                <th>名称</th>
+                <th>价格</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $data}
+            <tr>
+                <td>{$data['id']}</td>
+                <td>{$type[$data['type']]}</td>
+                <td><img height="50" src="{$data['img']}"></td>
+                <td>{$data['name']}</td>
+                <td>{$data['price']}</td>
+                <td>
+                    <a href="{$smarty.const.__ROOT__}/console/dishEdit?id={$data['id']}" class="button-xsmall button-secondary pure-button">编辑</a>
+                    <a class="button-xsmall button-error pure-button">删除</a>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="{$smarty.const.__ROOT__}/rs/js/jquery.js"></script>
+<script>
+    $(function(){
+
+    });
+
+
+</script>
+</body>
+</html>
