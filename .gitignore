@@ -1,6 +1,7 @@
 /vendor
 /ThinkPHP
 /Application/Runtime
+/.htaccess
 /.idea
 /Application/Common/Conf/db.php
 .md
