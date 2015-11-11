@@ -42,12 +42,12 @@
 
                 <div class="pure-control-group">
                     <label for="price">价格</label>
-                    <input id="price" name="price" value="{$info['price']}" type="text" placeholder="名称">
+                    <input id="price" name="price" value="{$info['price']}" type="text" placeholder="价格">
                 </div>
 
                 <div class="pure-control-group">
                     <label for="type">类型</label>
-                    <select id="type">
+                    <select id="type" name="type">
                         {foreach $type as $key=>$name}
                             <option value="{$key}" {if $key == $info['type']}selected{/if}>{$name}</option>
                         {/foreach}

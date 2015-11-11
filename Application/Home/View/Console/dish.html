@@ -45,7 +45,7 @@
                 <td>{$data['price']}</td>
                 <td>
                     <a href="{$smarty.const.__ROOT__}/console/dishEdit?id={$data['id']}" class="button-xsmall button-secondary pure-button">编辑</a>
-                    <a class="button-xsmall button-error pure-button">删除</a>
+                    <a onclick="return confirm('确定删除?')" href="{$smarty.const.__ROOT__}/console/dishDel?id={$data['id']}" class="button-xsmall button-error pure-button">删除</a>
                 </td>
             </tr>
             {/foreach}
